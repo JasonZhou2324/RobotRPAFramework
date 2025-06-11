@@ -1,0 +1,2 @@
+# RobotRPAFramework
+RobotRPAFramework 用于管理自动化测试代码的仓库平台，该平台旨在简化和加速自动化测试的开发和管理的过程。
