@@ -1,0 +1,17 @@
+/*
+@File    : tagsView.scss
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+@import './index.scss';
+
+/* 页面宽度小于768px
+------------------------------- */
+@media screen and (max-width: $sm) {
+	.tags-view-form {
+		.tags-view-form-col {
+			margin-bottom: 20px;
+		}
+	}
+}

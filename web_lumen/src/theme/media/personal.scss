@@ -1,0 +1,22 @@
+/*
+@File    : personal.scss
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+@import './index.scss';
+
+/* 页面宽度小于768px
+------------------------------- */
+@media screen and (max-width: $sm) {
+	.personal-info {
+		padding-left: 0 !important;
+		margin-top: 15px;
+	}
+	.personal-recommend-col {
+		margin-bottom: 15px;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+}

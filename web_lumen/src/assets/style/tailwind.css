@@ -1,0 +1,9 @@
+/*
+@File    : tailwind.css
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,0 +1,18 @@
+/*
+@File    : dialog.scss
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+@import './index.scss';
+
+/* 页面宽度小于800px
+------------------------------- */
+@media screen and (max-width: 800px) {
+	.el-dialog {
+		width: 90% !important;
+	}
+	.el-dialog.is-fullscreen {
+		width: 100% !important;
+	}
+}

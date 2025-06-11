@@ -1,0 +1,16 @@
+/*
+@File    : cityLinkage.scss
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+@import './index.scss';
+
+/* 页面宽度小于576px
+------------------------------- */
+@media screen and (max-width: $xs) {
+	.el-cascader__dropdown.el-popper {
+		overflow: auto;
+		max-width: 100%;
+	}
+}

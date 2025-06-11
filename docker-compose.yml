@@ -1,0 +1,140 @@
+version: "3.9" # 使用 Docker Compose 最新版本
+
+services:
+  web: # Web 服务，通常是 Nginx 或 Lumen 前端
+    container_name: youirpa-web  # 容器名称
+    build:
+      context: .  # 构建镜像的上下文目录为当前目录
+      dockerfile: docker_env/web/Dockerfile  # 指定 Dockerfile 路径
+    ports:
+      - "8080:8080"  # 映射宿主机和容器的 8080 端口
+    environment:
+      TZ: Asia/Shanghai  # 设置时区
+    volumes:
+      - ./docker_env/nginx/${NGINX_CONF}:/etc/nginx/conf.d/default.conf  # 动态挂载 nginx 配置文件（dev/prod）
+      - ./cere_pro/media:/cere_pro/media  # 媒体资源挂载目录
+    expose:
+      - "8080"  # 在容器网络中暴露端口（不会映射到宿主机）
+    restart: always  # 容器异常退出时自动重启
+    networks:
+      custom_network:
+        ipv4_address: 177.10.0.11  # 为容器分配静态 IP 地址
+
+  django: # 后端 Django 服务
+    container_name: youirpa-django
+    build:
+      context: .
+      dockerfile: docker_env/django/Dockerfile
+    working_dir: /cere_pro  # 容器内工作目录
+    depends_on:
+      - mysql  # 启动前依赖 MySQL 服务
+    environment:
+      PYTHONUNBUFFERED: 1  # 禁用输出缓冲，便于实时日志输出
+      DATABASE_HOST: mysql  # 数据库主机名称，对应服务名
+      TZ: Asia/Shanghai
+    volumes:
+      - ./cere_pro:/cere_pro  # 挂载代码目录
+      - ./logs:/var/log  # 挂载日志目录
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"
+    restart: always
+    networks:
+      custom_network:
+        ipv4_address: 177.10.0.12
+
+  mysql: # 数据库服务，使用官方 MySQL 镜像
+    image: mysql:8.0
+    container_name: youirpa-mysql
+    privileged: true  # 开启特权模式，某些系统配置可能需要
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}  # 通过 .env 提供 root 密码
+      MYSQL_DATABASE: django-vue3-admin  # 初始化数据库名
+      TZ: Asia/Shanghai
+    command: >
+      --wait_timeout=31536000 --interactive_timeout=31536000 
+      --max_connections=1000 
+      --default-authentication-plugin=mysql_native_password
+      # 设置 MySQL 参数以提升性能及兼容性
+    volumes:
+      - ./docker_env/mysql/data:/var/lib/mysql  # 数据目录挂载
+      - ./docker_env/mysql:/etc/mysql/conf.d    # 挂载配置文件目录
+      - ./docker_env/mysql/logs:/logs           # 日志目录
+    networks:
+      custom_network:
+        ipv4_address: 177.10.0.13
+
+  celery: # Celery 异步任务服务
+    container_name: youirpa-celery
+    build:
+      context: .
+      dockerfile: docker_env/celery/Dockerfile
+    working_dir: /cere_pro
+    depends_on:
+      - mysql
+    environment:
+      PYTHONUNBUFFERED: 1
+      DATABASE_HOST: mysql
+      TZ: Asia/Shanghai
+    volumes:
+      - ./cere_pro:/cere_pro
+      - ./logs:/var/log
+    restart: always
+    networks:
+      custom_network:
+        ipv4_address: 177.10.0.14
+
+  redis: # Redis 缓存/消息队列服务
+    image: redis:6.2.6-alpine
+    container_name: youirpa-redis
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      REDIS_PASSWORD: ${REDIS_PASSWORD}  # Redis 密码通过 .env 提供
+    volumes:
+      - ./docker_env/redis/data:/data  # Redis 数据挂载
+      - ./docker_env/redis/redis.conf:/etc/redis/redis.conf  # Redis 配置文件
+      - ./docker_env/redis/logs:/var/log/redis
+      - ./docker_env/redis/run:/var/run/redis
+    ports:
+      - "6379:6379"
+    sysctls:
+      net.core.somaxconn: 1024  # 调整最大连接队列
+    command: >
+      /bin/sh -c "
+        mkdir -p /var/log/redis /var/run/redis &&
+        chown -R redis:redis /var/log/redis /var/run/redis /data &&
+        chmod -R 755 /var/log/redis /var/run/redis /data &&
+        redis-server /etc/redis/redis.conf --appendonly yes --requirepass ${REDIS_PASSWORD}"
+      # 启动 redis-server 并开启 AOF 持久化
+    networks:
+      custom_network:
+        ipv4_address: 177.10.0.15
+    healthcheck: # 健康检查机制
+      test: [ "CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources: # 资源限制配置
+        limits:
+          memory: 1G
+        reservations:
+          memory: 512M
+    logging:
+      driver: "json-file"  # 使用 JSON 文件日志
+      options:
+        max-size: "100m"
+        max-file: "3"
+
+networks:
+  custom_network:
+    driver: bridge  # 使用桥接网络驱动
+    ipam:
+      config:
+        - subnet: 177.10.0.0/16  # 指定子网地址，用于静态 IP 分配

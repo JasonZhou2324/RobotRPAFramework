@@ -1,0 +1,15 @@
+/*
+@File    : reset.scss
+@Time    : 2025-04-09 11:12:24
+@Author  : JackGong
+*/
+
+.fs-crud-container {
+	.el-table thead {
+		color: #606266;
+	}
+	.el-input__inner::placeholder {
+		color: #dcdfe6;
+		font-size: 12px;
+	}
+}
