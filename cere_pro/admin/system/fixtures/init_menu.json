@@ -916,125 +916,6 @@
                 ]
             },
             {
-                "name": "地区管理",
-                "icon": "iconfont icon-Area",
-                "sort": 2,
-                "is_link": false,
-                "is_catalog": false,
-                "web_path": "/areas",
-                "component": "system/areas/index",
-                "component_name": "areas",
-                "status": true,
-                "cache": false,
-                "visible": true,
-                "parent": 10,
-                "children": [],
-                "menu_button": [
-                    {
-                        "name": "查询",
-                        "value": "area:Search",
-                        "api": "/api/system/area/",
-                        "method": 0
-                    },
-                    {
-                        "name": "详情",
-                        "value": "area:Retrieve",
-                        "api": "/api/system/area/{id}/",
-                        "method": 0
-                    },
-                    {
-                        "name": "新增",
-                        "value": "area:Create",
-                        "api": "/api/system/area/",
-                        "method": 1
-                    },
-                    {
-                        "name": "编辑",
-                        "value": "area:Update",
-                        "api": "/api/system/area/{id}/",
-                        "method": 2
-                    },
-                    {
-                        "name": "删除",
-                        "value": "area:Delete",
-                        "api": "/api/system/area/{id}/",
-                        "method": 3
-                    }
-                ],
-                "menu_field": [
-                    {
-                        "field_name": "code",
-                        "title": "地区编码",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "create_datetime",
-                        "title": "创建时间",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "creator",
-                        "title": "创建人",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "dept_belong_id",
-                        "title": "数据归属部门",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "description",
-                        "title": "描述",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "enable",
-                        "title": "是否启用",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "id",
-                        "title": "Id",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "initials",
-                        "title": "首字母",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "level",
-                        "title": "地区层级(1省份 2城市 3区县 4乡级)",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "modifier",
-                        "title": "修改人",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "name",
-                        "title": "名称",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "pcode",
-                        "title": "父地区编码",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "pinyin",
-                        "title": "拼音",
-                        "model": "Area"
-                    },
-                    {
-                        "field_name": "update_datetime",
-                        "title": "修改时间",
-                        "model": "Area"
-                    }
-                ]
-            },
-            {
                 "name": "附件管理",
                 "icon": "iconfont icon-file",
                 "sort": 3,
@@ -1200,38 +1081,8 @@
                         "model": "LoginLog"
                     },
                     {
-                        "field_name": "area_code",
-                        "title": "区域代码",
-                        "model": "LoginLog"
-                    },
-                    {
                         "field_name": "browser",
                         "title": "浏览器名",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "city",
-                        "title": "城市",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "continent",
-                        "title": "州",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "country",
-                        "title": "国家",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "country_code",
-                        "title": "简称",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "country_english",
-                        "title": "英文全称",
                         "model": "LoginLog"
                     },
                     {
@@ -1255,11 +1106,6 @@
                         "model": "LoginLog"
                     },
                     {
-                        "field_name": "district",
-                        "title": "县区",
-                        "model": "LoginLog"
-                    },
-                    {
                         "field_name": "id",
                         "title": "Id",
                         "model": "LoginLog"
@@ -1270,23 +1116,8 @@
                         "model": "LoginLog"
                     },
                     {
-                        "field_name": "isp",
-                        "title": "运营商",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "latitude",
-                        "title": "纬度",
-                        "model": "LoginLog"
-                    },
-                    {
                         "field_name": "login_type",
                         "title": "登录类型",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "longitude",
-                        "title": "经度",
                         "model": "LoginLog"
                     },
                     {
@@ -1297,11 +1128,6 @@
                     {
                         "field_name": "os",
                         "title": "操作系统",
-                        "model": "LoginLog"
-                    },
-                    {
-                        "field_name": "province",
-                        "title": "省份",
                         "model": "LoginLog"
                     },
                     {
@@ -1440,5 +1266,53 @@
         ],
         "menu_button": [],
         "menu_field": []
+    },
+    {
+        "name": "测试管理",
+        "icon": "iconfont icon-shuju1",
+        "sort": 7,
+        "is_link": false,
+        "is_catalog": true,
+        "web_path": "/testManage",
+        "component": "",
+        "component_name": "",
+        "status": true,
+        "cache": true,
+        "visible": true,
+        "parent": null,
+        "children":[
+            {
+                "name": "需求分析",
+                "icon": "iconfont icon-LoggedinPC",
+                "sort": 1,
+                "is_link": false,
+                "is_catalog": false,
+                "web_path": "/demand_analysis",
+                "component": "demand_analysis/DemandAnalysisViewSet/index",
+                "component_name": "DemandAnalysisViewSet",
+                "status": true,
+                "cache": true,
+                "visible": true,
+                "parent": 23,
+                "children": [],
+                "menu_button": []
+            },
+            {
+                "name": "用例生成",
+                "icon": "iconfont icon-LoggedinPC",
+                "sort": 1,
+                "is_link": false,
+                "is_catalog": false,
+                "web_path": "/test_gen",
+                "component": "data_visible/DataVisibleViewSet/index",
+                "component_name": "TestCaseGen",
+                "status": true,
+                "cache": true,
+                "visible": true,
+                "parent": 23,
+                "children": [],
+                "menu_button": []
+            }
+        ]
     }
 ]

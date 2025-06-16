@@ -9,6 +9,7 @@
 from rest_framework import serializers
 from django.conf import settings
 from django_filters.rest_framework import FilterSet, CharFilter
+from django.contrib.auth.models import AnonymousUser
 
 from admin.utils.serializers import CustomModelSerializer
 from admin.utils.viewset import CustomModelViewSet
@@ -52,6 +53,17 @@ class DownloadCenterViewSet(CustomModelViewSet):
     extra_filter_class = []
 
     def get_queryset(self):
-        if self.request.user.is_superuser:
-            return super().get_queryset()
+        # 处理 swagger schema fake view 情况
+        if getattr(self, 'swagger_fake_view', False):
+            return super().get_queryset().none()
+
+        # 避免未登录用户查询（AnonymousUser 不能参与过滤）
+        if isinstance(self.request.user, AnonymousUser):
+            return super().get_queryset().none()
+
+        # 已登录用户，正常过滤
         return super().get_queryset().filter(creator=self.request.user)
+
+        # if self.request.user.is_superuser:
+        #     return super().get_queryset()
+        # return super().get_queryset().filter(creator=self.request.user)

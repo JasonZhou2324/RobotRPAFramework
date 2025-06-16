@@ -7,7 +7,7 @@
 """
 import json
 import urllib
-from application import settings
+from app import settings
 from jwt import InvalidSignatureError
 from asgiref.sync import sync_to_async, async_to_sync
 from channels.db import database_sync_to_async

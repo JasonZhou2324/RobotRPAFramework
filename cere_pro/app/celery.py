@@ -8,9 +8,11 @@
 
 import functools
 import os
+
 from celery.signals import task_postrun
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'application.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+
 from django.conf import settings
 from celery import platforms
 
@@ -42,7 +44,6 @@ def retry_base_task_error():
                 return func(*args, **kwargs)
             except Exception as exc:
                 raise self.retry(exc=exc)
-
         return wrapper
 
     return wraps

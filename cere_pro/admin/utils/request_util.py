@@ -183,17 +183,17 @@ def get_ip_analysis(ip):
     :return:
     """
     data = {
-        "continent": "",
-        "country": "",
-        "province": "",
-        "city": "",
-        "district": "",
-        "isp": "",
-        "area_code": "",
-        "country_english": "",
-        "country_code": "",
-        "longitude": "",
-        "latitude": ""
+        # "continent": "",
+        # "country": "",
+        # "province": "",
+        # "city": "",
+        # "district": "",
+        # "isp": "",
+        # "area_code": "",
+        # "country_english": "",
+        # "country_code": "",
+        # "longitude": "",
+        # "latitude": ""
     }
     if ip != 'unknown' and ip:
         if getattr(settings, 'ENABLE_LOGIN_ANALYSIS_LOG', True):
@@ -215,7 +215,8 @@ def save_login_log(request):
     :return:
     """
     ip = get_request_ip(request=request)
-    analysis_data = get_ip_analysis(ip)
+    # analysis_data = get_ip_analysis(ip)
+    analysis_data = {}
     analysis_data['username'] = request.user.username
     analysis_data['ip'] = ip
     analysis_data['agent'] = str(parse(request.META['HTTP_USER_AGENT']))

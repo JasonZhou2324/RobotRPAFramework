@@ -14,7 +14,6 @@ export default {
         /* 常规配置 */
         configSystem: '系统配置',
         configDict: '字典管理',
-        configArea: '地区管理',
         configFile: '附件管理',
         /* 系统管理 */
         systemMenu: '菜单管理',

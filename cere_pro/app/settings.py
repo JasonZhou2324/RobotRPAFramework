@@ -82,7 +82,7 @@ MIDDLEWARE = [
     "admin.utils.middleware.ApiLoggingMiddleware",
 ]
 
-ROOT_URLCONF = "application.urls"
+ROOT_URLCONF = "app.urls"
 
 TEMPLATES = [
     {
@@ -100,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "application.wsgi.app"
+WSGI_APPLICATION = "app.wsgi.app"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -241,7 +241,7 @@ LOGGING = {
     "handlers": {
         'db': {
             'level': 'INFO',
-            'class': 'application.log_db_handler.DatabaseLogHandler',
+            'class': 'app.log_db_handler.DatabaseLogHandler',
             'formatter': 'standard',
             'keep_days': 7,
             'db_config': {
